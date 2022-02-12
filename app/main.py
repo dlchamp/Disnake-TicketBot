@@ -6,13 +6,12 @@ import config
 import disnake
 from disnake.ext import commands
 
-
 # initialize bot and set elevated intents
 intents = disnake.Intents.default()
 intents.members = True
 
 bot = commands.Bot(
-    command_prefix="-", intents=intents, test_guilds=[778812053980315649]
+    command_prefix="-", intents=intents
 )
 
 

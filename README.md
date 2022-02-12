@@ -37,20 +37,18 @@ Features:
 2. Navigate to Discord Developer Portal - https://discord.com/developers/applications
 3. Click *New Application*
 4. Give the Appplication a name and *Create*
-5. Add image for Discord icon - https://raw.githubusercontent.com/dlchamp/LetterkennyBot/main/container_icon.png
-6. Go to Bot tab and click *Add Bot*
+5. Add image for Discord icon (optional)
 7. Keep the default settings for Public Bot - *checked* and Require OAuth2 Code Grant - *unchecked*
-8. Add bot image - https://raw.githubusercontent.com/dlchamp/LetterkennyBot/main/container_icon.png
+8. Add bot image (optional)
 9. Copy Token
 10. Go to OAuth2 tab
 11. Under *Scopes* - Check Bot
-12. Under *Bot Permissions* - check Send messages, Attach Files, Read Message History, View Channels
+12. Under *Bot Permissions* - Admin
 13. Copy the generated link and Go to the URL in your browser - Invite Bot to your Discord server
 
 ### Configuring the bot
-
-
-
+1. Edit the .env-sample file and add in your necessary IDs and bot token, rename .env-sample to .env
+2. If you do not wish to use an admin AND staff role, just add the same ID to both variables
 
 
 
