@@ -30,6 +30,7 @@ Features:
 ### Dependencies
 * Built on [Python3 - 3.9.7](https://www.python.org/downloads/)
 * see requirements.txt for Python dependencies
+* Reqires git to be installed for disnake dev package
 
 
 #### Setting up Discord Bot
@@ -47,8 +48,10 @@ Features:
 13. Copy the generated link and Go to the URL in your browser - Invite Bot to your Discord server
 
 ### Configuring the bot
-1. Edit the .env-sample file and add in your necessary IDs and bot token, rename .env-sample to .env
-2. If you do not wish to use an admin AND staff role, just add the same ID to both variables
+1. Install git
+2. Install dependancies with `pip install -r requirements.txt`
+3. Edit the .env-sample file and add in your necessary IDs and bot token, rename .env-sample to .env
+4. If you do not wish to use an admin AND staff role, just add the same ID to both variables
 
 
 
