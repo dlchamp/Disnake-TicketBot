@@ -12,7 +12,7 @@ Features:
 - DM user on ticket close with an embed that includes a direct link back to the archived thread for future reference
 
 
-<img src= "https://thumbs.gfycat.com/ImpishQuaintCanine-mobile.mp4" width="696" height="392" />
+<img src= "https://thumbs.gfycat.com/ImpishQuaintCanine-size_restricted.gif" width="696" height="392" />
 
 
 
