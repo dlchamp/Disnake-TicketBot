@@ -264,34 +264,67 @@ class Ticket(commands.Cog):
         Requirements:
         Message must be a DM from the bot owner ID (set in env)
         comma separated channel ID, message ID
+        if message is for new message, channel ID must be included after :
         uploaded sample.json
         """
         if isinstance(message.channel, disnake.DMChannel):
             if message.author.id == owner_id:
-                try:
-                    message_content = message.content.replace(", ", " ").strip()
-                    channel_id, message_id = message_content.split(" ")
-                    channel = await self.bot.fetch_channel(channel_id)
-                    msg = await channel.fetch_message(message_id)
-                except:
-                    await message.channel.send(f'Message should contain the channel ID and message ID in the proper format.\n(Example: 941546832520163328, 941558879744045096 (upload file) then send message.')
-                    return
+                if message.content.startswith("new"):
+                    try:
+                        channel_id = message.content.split(":")[1].strip()
+                        channel = await self.bot.fetch_channel(channel_id)
+                    except:
+                        await message.channel.send(
+                            'Please make sure your message is in the correct format\nMessage format: "new: channel ID" (upload sample.json), then send'
+                        )
 
-                if len(attachments) == 1:
-                    if attachments[0].filename.endswith("json"):
-                        url = attachments[0].url
-                        response = requests.get(url).json()
-                        embed_dict = response["embed"]
+                    if len(attachments) == 1:
+                        if attachments[0].filename.endswith("json"):
+                            url = attachments[0].url
+                            response = requests.get(url).json()
+                            embed_dict = response["embed"]
 
-                        embed = disnake.Embed.from_dict(embed_dict)
-                        await msg.edit(content=None, embed=embed)
+                            embed = disnake.Embed.from_dict(embed_dict)
+                            await channel.send(
+                                content=None, embed=embed, view=TicketButton(self.bot)
+                            )
+                        else:
+                            await message.channel.send(
+                                "Please upload only the sample.json file"
+                            )
                     else:
                         await message.channel.send(
                             "Please upload only the sample.json file"
                         )
+
                 else:
-                    await message.channel.send(
-                        "Please upload only the sample.json file"
+
+                    try:
+                        message_content = message.content.replace(", ", " ").strip()
+                        channel_id, message_id = message_content.split(" ")
+                        channel = await self.bot.fetch_channel(channel_id)
+                        msg = await channel.fetch_message(message_id)
+                    except:
+                        await message.channel.send(
+                            f"Message should contain the channel ID and message ID in the proper format.\n(Example: 941546832520163328, 941558879744045096 (upload file) then send message."
+                        )
+                        return
+
+                    if len(attachments) == 1:
+                        if attachments[0].filename.endswith("json"):
+                            url = attachments[0].url
+                            response = requests.get(url).json()
+                            embed_dict = response["embed"]
+
+                            embed = disnake.Embed.from_dict(embed_dict)
+                            await msg.edit(content=None, embed=embed)
+                        else:
+                            await message.channel.send(
+                                "Please upload only the sample.json file"
+                            )
+                    else:
+                        await message.channel.send(
+                            "Please upload only the sample.json file"
                         )
 
 
