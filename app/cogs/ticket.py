@@ -268,10 +268,14 @@ class Ticket(commands.Cog):
         """
         if isinstance(message.channel, disnake.DMChannel):
             if message.author.id == owner_id:
-                message_content = message.content.replace(", ", " ").strip()
-                channel_id, message_id = message_content.split(" ")
-                channel = await self.bot.fetch_channel(channel_id)
-                msg = await channel.fetch_message(message_id)
+                try:
+                    message_content = message.content.replace(", ", " ").strip()
+                    channel_id, message_id = message_content.split(" ")
+                    channel = await self.bot.fetch_channel(channel_id)
+                    msg = await channel.fetch_message(message_id)
+                except:
+                    await message.channel.send(f'Message should contain the channel ID and message ID in the proper format.\n(Example: 941546832520163328, 941558879744045096 (upload file) then send message.')
+                    return
 
                 if len(attachments) == 1:
                     if attachments[0].filename.endswith("json"):
@@ -283,12 +287,12 @@ class Ticket(commands.Cog):
                         await msg.edit(content=None, embed=embed)
                     else:
                         await message.channel.send(
-                            "Please upload update the edited sample.json with your message."
+                            "Please upload only the sample.json file"
                         )
                 else:
                     await message.channel.send(
-                        "Please upload the edited sample.json with your channel and message ID message\n(Example: 941546832520163328, 941558879744045096 (upload file) then send message.)"
-                    )
+                        "Please upload only the sample.json file"
+                        )
 
 
 def setup(bot):
