@@ -198,8 +198,7 @@ class CloseTicket(disnake.ui.View):
 
             embed = disnake.Embed(
                 title=f"You support thread in {inter.guild.name} has been closed.",
-                description=f"""If your question has not been answered or your issue is not resolved,
-                please create a new support ticket'.\n\n You can use [this link](https://discordapp.com/channels/{inter.guild.id}/{self.thread.id}) to access the archived ticket for future reference.""",
+                description=f"""If your question has not been answered or your issue is not resolved, please create a new support ticket'.\n\n You can use [this link](https://discordapp.com/channels/{inter.guild.id}/{self.thread.id}) to access the archived ticket for future reference.""",
             )
             if inter.guild.icon:
                 embed.set_thumbnail(url=inter.guild.icon.url)
