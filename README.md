@@ -12,6 +12,9 @@ Features:
 - DM user on ticket close with an embed that includes a direct link back to the archived thread for future reference
 
 
+![Example video](https://thumbs.gfycat.com/ImpishQuaintCanine-mobile.mp4 | width=500)
+
+
 
 ## Bot Usage
 
