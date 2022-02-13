@@ -140,7 +140,9 @@ class SupportModal(disnake.ui.Modal):
         # send message to new thread, add CloseTicket interaction view button
         # Params: new_thread, member
         await new_thread.send(
-            content=f'{member.mention}, {staff_role.mention}', embed=embed, view=CloseTicket(new_thread, member)
+            content=f"{member.mention}, {staff_role.mention}",
+            embed=embed,
+            view=CloseTicket(new_thread, member),
         )
         # Required interaction response
         await inter.send(f"Your ticket has been created.", ephemeral=True)
@@ -257,58 +259,62 @@ class Ticket(commands.Cog):
         if message.channel == help_channel:
             guild = message.guild
             owner = guild.owner
+            channel = message.channel
             admin_role = guild.get_role(config.ADMIN_ROLE)
-            '''
+
+            if (
+                message.author != self.bot.user or
+                 message.type == disnake.MessageType.thread_created
+                 ):
+                await message.delete()
+            """
             Add new embed with attached "Start Support" button or
             edit current embed
 
             Check if the message comes from an Admin role from the guild owner
-            '''
-            if (
-                message.author == owner or
-                admin_role in message.author.roles
-                ):
+            """
+            if message.author == owner or admin_role in message.author.roles:
 
-                '''
+                """
                 Add new embed to the channel - only attach file with an empty message
                 file must be the edited sample.json file
-                '''
-                if message.content == '':
-                    '''
+                """
+                if message.content == "":
+                    """
                     Message content is empty - new embed
                     check for correct file criteria, must be 1 file
                     must be the sample.json
-                    '''
+                    """
                     embed = await check_attachments(message)
 
-                    if embed == 'Error':
-                        await channel.send('Please check the sample.json for proper formatting.', delete_after=5)
+                    if embed == "Error":
+                        await channel.send(
+                            "Please check the sample.json for proper formatting.",
+                            delete_after=5,
+                        )
                         return
                     await channel.send(embed=embed, view=TicketButton(self.bot))
-                    await message.delete()
 
                 else:
-                    '''
+                    """
                     Message content is not empty, should be a message ID only
                     Check attachments, and check message ID to confirm it's a message
                     If no errors, update embed in channel
-                    '''
+                    """
                     msg = await check_message(message)
                     embed = await check_attachments(message)
 
-                    if not msg == 'Error':
-                        if not embed == 'Error':
+                    if msg != "Error":
+                        if embed != "Error":
                             await msg.edit(content=None, embed=embed)
                         else:
-                            await channel.send('Please check the sample.json', delete_after=5)
+                            await channel.send(
+                                "Please check the sample.json", delete_after=5
+                            )
                     else:
-                        await channel.send('No message with that ID was found.', delete_after=5)
-
-                    await message.delete()
-
-
-
-
+                        await channel.send(
+                            "No message with that ID was found.", delete_after=5
+                        )
 
 
 def setup(bot):
