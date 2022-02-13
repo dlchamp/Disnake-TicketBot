@@ -323,6 +323,23 @@ class Ticket(commands.Cog):
                         await channel.send(
                             "No message with that ID was found.", delete_after=5
                         )
+            else:
+                await message.delete()
+
+    # command for downloading sample.json - requires admin or owner
+    @commands.command(aliases=['sample','s','json'])
+    async def download_sample(self, ctx):
+        guild = ctx.guild
+        owner = guild.owner
+        member = ctx.author
+        admin_role = guild.get_role(config.ADMIN_ROLE)
+
+        if member == owner or admin_role in member.roles:
+            await ctx.send(f'Check your DM for the sample file.',delete_after=5)
+            await member.send(file=disnake.File('../sample.json'))
+        else:
+            await ctx.send(f'You do not have permission to use this command.',delete_after=5)
+
 
 
 def setup(bot):
