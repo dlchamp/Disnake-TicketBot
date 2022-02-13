@@ -1,8 +1,8 @@
 {
   "embed":{
-    "color":16747116,
+    "color":100456,
     "title":"📝  When submitting a support ticket, please include all necessary information in the summary:",
-    "description":"If your question is regarding an issue with a fellow server member, please be sure to include their Discord ID so that we may quickly identify them."
+    "description": "If your question is regarding an issue with a fellow server member, please be sure to include their Discord ID so that we may quickly identify them."
   }
 
 }
