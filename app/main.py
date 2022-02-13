@@ -10,9 +10,7 @@ from disnake.ext import commands
 intents = disnake.Intents.default()
 intents.members = True
 
-bot = commands.Bot(
-    command_prefix="-", intents=intents
-)
+bot = commands.Bot(command_prefix="-", intents=intents)
 
 
 # load extensions in /cogs
