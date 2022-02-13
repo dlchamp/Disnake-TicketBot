@@ -28,7 +28,7 @@ Features:
 - Simply edit the included sample.json file for the message color, title, and description, then go your #help channel and upload the file.  Bot will create the embed and send it to the channel, then delete your message
 - To update the embed -
     - Copy the message ID
-    - paste it into the message body
+    - paste it into the message body in #help channel
     - upload the new sample.json
     - send the file.
     - Bot will update the embed and delete your message.
