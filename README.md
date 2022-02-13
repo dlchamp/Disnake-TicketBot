@@ -25,8 +25,13 @@ Features:
 - On ticket close the thread is archived, the user recieves a DM with the notification and a direct link back to the archived ticket, and a "ticket closed" message is logged.
 
 **ADMIN**
-- Send persistent "Support message" to the configurd help channel via DM\nMessage format: "new: channel_id" (upload sample.json), send message
-- Update persistent help channel message via DM to Bot.\nMessage format: "channel_ID, message_ID" (upload sample.json), send message
+- Simply edit the included sample.json file for the message color, title, and description, then go your #help channel and upload the file.  Bot will create the embed and send it to the channel, then delete your message
+- To update the embed -
+    - Copy the message ID
+    - paste it into the message body
+    - upload the new sample.json
+    - send the file.
+    - Bot will update the embed and delete your message.
 
 ## Bot configuration and setup
 
