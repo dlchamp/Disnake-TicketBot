@@ -111,6 +111,7 @@ class SupportModal(disnake.ui.Modal):
         guild = self.bot.get_guild(guild_id)
         log_channel = guild.get_channel(config.LOG_CHANNEL)
         channel = guild.get_channel(channel_id)
+        admin_role = guild.get_role(config.ADMIN_ROLE)
         staff_role = guild.get_role(config.STAFF_ROLE)
         # update list of current open tickets
         ticket_data = get_ticket_data()
@@ -139,11 +140,18 @@ class SupportModal(disnake.ui.Modal):
         )
         # send message to new thread, add CloseTicket interaction view button
         # Params: new_thread, member
-        await new_thread.send(
-            content=f"{member.mention}, {staff_role.mention}",
-            embed=embed,
-            view=CloseTicket(new_thread, member),
-        )
+        if staff_role == admin_role:
+            await new_thread.send(
+                content=f"{member.mention}, {staff_role.mention}",
+                embed=embed,
+                view=CloseTicket(new_thread, member),
+            )
+        else:
+            await new_thread.send(
+                content=f"{member.mention}, {staff_role.mention}, {admin_role.mention}",
+                embed=embed,
+                view=CloseTicket(new_thread, member),
+            )
         # Required interaction response
         await inter.send(f"Your ticket has been created.", ephemeral=True)
 
