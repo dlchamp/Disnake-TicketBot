@@ -271,9 +271,9 @@ class Ticket(commands.Cog):
             admin_role = guild.get_role(config.ADMIN_ROLE)
 
             if (
-                message.author != self.bot.user or
-                 message.type == disnake.MessageType.thread_created
-                 ):
+                message.author != self.bot.user
+                or message.type == disnake.MessageType.thread_created
+            ):
                 await message.delete()
             """
             Add new embed with attached "Start Support" button or
