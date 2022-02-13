@@ -59,7 +59,8 @@ Params:
 label - text box title
 placeholder - Summary box text, gets replaced when user starts typing
 style = Textbox style (long input)
-max_length = Max character for the textbox (default 500)
+min_length - Required minimum character count in text box
+max_length = Max character for the text box
 
 Modal view
 Params:
@@ -89,7 +90,7 @@ class SupportModal(disnake.ui.Modal):
         self.bot = bot
 
     """
-    Modal interaction callback function
+    Modal interaction callback
 
     Gets the open tickets from tickets.json, checks modal interaction author against the returned list
     if user ID exists in list, send ephemeral message, do not create thread/ticket
