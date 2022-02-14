@@ -268,21 +268,14 @@ class Ticket(commands.Cog):
             guild = message.guild
             owner = guild.owner
             channel = message.channel
+            help_channel = guild.get_channel(config.HELP_CHANNEL)
             admin_role = guild.get_role(config.ADMIN_ROLE)
 
-            if (
-                message.author != self.bot.user
-                or message.type == disnake.MessageType.thread_created
-            ):
-                await message.delete()
-            """
-            Add new embed with attached "Start Support" button or
-            edit current embed
+            if channel == help_channel:
+                if message.type == disnake.MessageType.thread_created:
+                    await message.delete()
 
-            Check if the message comes from an Admin role from the guild owner
-            """
-            if message.author == owner or admin_role in message.author.roles:
-
+            elif message.author == owner or admin_role in message.author.roles:
                 """
                 Add new embed to the channel - only attach file with an empty message
                 file must be the edited sample.json file
@@ -323,8 +316,7 @@ class Ticket(commands.Cog):
                         await channel.send(
                             "No message with that ID was found.", delete_after=5
                         )
-            else:
-                await message.delete()
+
 
     # command for downloading sample.json - requires admin or owner
     @commands.command(aliases=['sample','s','json'])
