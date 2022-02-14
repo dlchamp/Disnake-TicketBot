@@ -262,7 +262,7 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-        if message.author.bot:
+        if message.author.bot and message.type != disnake.MessageType.thread_created:
             return
 
         guild = message.guild
@@ -275,7 +275,8 @@ class Ticket(commands.Cog):
         if channel == help_channel:
             # auto delete the "new thead" message
             if message.type == disnake.MessageType.thread_created:
-                return await message.delete()
+                await message.delete()
+                return
 
 
             if message.author == owner or admin_role in message.author.roles:
@@ -296,8 +297,12 @@ class Ticket(commands.Cog):
                             "Please check the sample.json for proper formatting.",
                             delete_after=5,
                         )
-                        return
-                    await channel.send(embed=embed, view=TicketButton(self.bot))
+                    elif embed is None:
+                        await channel.send(
+                            'No supported file was uploaded.', delete_after=5
+                            )
+                    else:
+                        await channel.send(embed=embed, view=TicketButton(self.bot))
                     await message.delete()
 
                 else:
@@ -309,17 +314,15 @@ class Ticket(commands.Cog):
                     msg = await check_message(message)
                     embed = await check_attachments(message)
 
-                    if msg != "Error":
-                        if embed != "Error":
-                            await msg.edit(content=None, embed=embed)
-                        else:
-                            await channel.send(
-                                "Please check the sample.json", delete_after=5
-                            )
+                    if msg == 'Error':
+                        await channel.send(f'No channel with that ID was found', delete_after=5)
                     else:
-                        await channel.send(
-                            "No message with that ID was found.", delete_after=5
-                        )
+                        if embed is None:
+                            await channel.send('No supported file was uploaded.', delete_after=5)
+                        elif embed == 'Error':
+                            await channel.send('Please check the sample.json for formatting issues.', delete_after=5)
+                        else:
+                            await msg.edit(content=None, embed=embed)
                     await message.delete()
 
 
