@@ -262,20 +262,23 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        if message.author.bot:
+            return
+
+        guild = message.guild
+        owner = guild.owner
+        channel = message.channel
+        help_channel = guild.get_channel(config.HELP_CHANNEL)
+        admin_role = guild.get_role(config.ADMIN_ROLE)
         help_channel = await self.bot.fetch_channel(config.HELP_CHANNEL)
 
-        if message.channel == help_channel:
-            guild = message.guild
-            owner = guild.owner
-            channel = message.channel
-            help_channel = guild.get_channel(config.HELP_CHANNEL)
-            admin_role = guild.get_role(config.ADMIN_ROLE)
+        if channel == help_channel:
+            # auto delete the "new thead" message
+            if message.type == disnake.MessageType.thread_created:
+                return await message.delete()
 
-            if channel == help_channel:
-                if message.type == disnake.MessageType.thread_created:
-                    await message.delete()
 
-            elif message.author == owner or admin_role in message.author.roles:
+            if message.author == owner or admin_role in message.author.roles:
                 """
                 Add new embed to the channel - only attach file with an empty message
                 file must be the edited sample.json file
@@ -295,6 +298,7 @@ class Ticket(commands.Cog):
                         )
                         return
                     await channel.send(embed=embed, view=TicketButton(self.bot))
+                    await message.delete()
 
                 else:
                     """
@@ -316,6 +320,8 @@ class Ticket(commands.Cog):
                         await channel.send(
                             "No message with that ID was found.", delete_after=5
                         )
+                    await message.delete()
+
 
 
     # command for downloading sample.json - requires admin or owner
