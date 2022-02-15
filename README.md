@@ -12,7 +12,11 @@ Features:
 - DM user on ticket close with an embed that includes a direct link back to the archived thread for future reference
 
 
-<img src= "https://thumbs.gfycat.com/ImpishQuaintCanine-size_restricted.gif" />
+
+
+https://user-images.githubusercontent.com/36091350/154142816-7d43b4be-78e7-4a41-90a4-9fe15f9712c3.mp4
+
+
 
 
 
@@ -33,7 +37,11 @@ Features:
     - send the file.
     - Bot will update the embed and delete your message.
 
-<img src = "https://thumbs.gfycat.com/SlimyDefinitiveFreshwatereel-size_restricted.gif" />
+
+
+https://user-images.githubusercontent.com/36091350/154142855-071cc58f-8f24-4872-aa2f-5f14e9c1ab36.mp4
+
+
 
 ## Bot configuration and setup
 
