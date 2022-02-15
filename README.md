@@ -33,6 +33,8 @@ Features:
     - send the file.
     - Bot will update the embed and delete your message.
 
+<img src = "https://gfycat.com/compassionateeveryarthropods-size_restricted.gif" />
+
 ## Bot configuration and setup
 
 ### Dependencies
