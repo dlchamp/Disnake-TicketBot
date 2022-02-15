@@ -33,7 +33,7 @@ Features:
     - send the file.
     - Bot will update the embed and delete your message.
 
-<img src = "https://thumbs.gfycat.com/SlimyDefinitiveFreshwatereel-mobile.mp4" />
+<img src = "https://thumbs.gfycat.com/SlimyDefinitiveFreshwatereel-size_restricted.gif" />
 
 ## Bot configuration and setup
 
