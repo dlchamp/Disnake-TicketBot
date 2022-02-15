@@ -49,6 +49,7 @@ class TicketButton(disnake.ui.View):
                 ephemeral=True,
             )
             return
+
         await interaction.response.send_modal(modal=SupportModal(self.bot))
 
 
@@ -113,6 +114,7 @@ class SupportModal(disnake.ui.Modal):
         channel = guild.get_channel(channel_id)
         admin_role = guild.get_role(config.ADMIN_ROLE)
         staff_role = guild.get_role(config.STAFF_ROLE)
+
         # update list of current open tickets
         ticket_data = get_ticket_data()
         ticket_data["open_tickets"].append(member.id)
@@ -146,6 +148,7 @@ class SupportModal(disnake.ui.Modal):
                 embed=embed,
                 view=CloseTicket(new_thread, member),
             )
+
         else:
             await new_thread.send(
                 content=f"{member.mention}, {staff_role.mention}, {admin_role.mention}",
@@ -160,6 +163,7 @@ class SupportModal(disnake.ui.Modal):
             title=f"{member.display_name} has opened a support ticket",
             description=f"[{new_thread.name}](https://discordapp.com/channels/{guild.id}/{new_thread.id})",
         )
+
         await log_channel.send(embed=embed)
 
 
@@ -214,6 +218,7 @@ class CloseTicket(disnake.ui.View):
                 title=f"You support thread in {inter.guild.name} has been closed.",
                 description=f"""If your question has not been answered or your issue is not resolved, please create a new support ticket.\n\n You can use [this link](https://discordapp.com/channels/{inter.guild.id}/{self.thread.id}) to access the archived ticket for future reference.""",
             )
+
             if inter.guild.icon:
                 embed.set_thumbnail(url=inter.guild.icon.url)
 
@@ -262,6 +267,7 @@ class Ticket(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+
         if message.author.bot and message.type != disnake.MessageType.thread_created:
             return
 
@@ -277,7 +283,6 @@ class Ticket(commands.Cog):
             if message.type == disnake.MessageType.thread_created:
                 await message.delete()
                 return
-
 
             if message.author == owner or admin_role in message.author.roles:
                 """
@@ -299,8 +304,8 @@ class Ticket(commands.Cog):
                         )
                     elif embed is None:
                         await channel.send(
-                            'No supported file was uploaded.', delete_after=5
-                            )
+                            "No supported file was uploaded.", delete_after=5
+                        )
                     else:
                         await channel.send(embed=embed, view=TicketButton(self.bot))
                     await message.delete()
@@ -314,21 +319,26 @@ class Ticket(commands.Cog):
                     msg = await check_message(message)
                     embed = await check_attachments(message)
 
-                    if msg == 'Error':
-                        await channel.send(f'No channel with that ID was found', delete_after=5)
+                    if msg == "Error":
+                        await channel.send(
+                            f"No channel with that ID was found", delete_after=5
+                        )
                     else:
                         if embed is None:
-                            await channel.send('No supported file was uploaded.', delete_after=5)
-                        elif embed == 'Error':
-                            await channel.send('Please check the sample.json for formatting issues.', delete_after=5)
+                            await channel.send(
+                                "No supported file was uploaded.", delete_after=5
+                            )
+                        elif embed == "Error":
+                            await channel.send(
+                                "Please check the sample.json for formatting issues.",
+                                delete_after=5,
+                            )
                         else:
                             await msg.edit(content=None, embed=embed)
                     await message.delete()
 
-
-
     # command for downloading sample.json - requires admin or owner
-    @commands.command(aliases=['sample','s','json'])
+    @commands.command(aliases=["sample", "s", "json"])
     async def download_sample(self, ctx):
         guild = ctx.guild
         owner = guild.owner
@@ -336,11 +346,12 @@ class Ticket(commands.Cog):
         admin_role = guild.get_role(config.ADMIN_ROLE)
 
         if member == owner or admin_role in member.roles:
-            await ctx.send(f'Check your DM for the sample file.',delete_after=5)
-            await member.send(file=disnake.File('../sample.json'))
+            await ctx.send(f"Check your DM for the sample file.", delete_after=5)
+            await member.send(file=disnake.File("../sample.json"))
         else:
-            await ctx.send(f'You do not have permission to use this command.',delete_after=5)
-
+            await ctx.send(
+                f"You do not have permission to use this command.", delete_after=5
+            )
 
 
 def setup(bot):
