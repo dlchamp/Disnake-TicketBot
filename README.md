@@ -47,8 +47,8 @@ https://user-images.githubusercontent.com/36091350/154142855-071cc58f-8f24-4872-
 
 ### Dependencies
 * Built on [Python3 - 3.9.7](https://www.python.org/downloads/)
-* see requirements.txt for Python dependencies
-* Reqires git to be installed for disnake dev package
+* Disnake version 2.4
+* install all dependcies with `python pip install -r requirements.txt`
 
 
 #### Setting up Discord Bot
