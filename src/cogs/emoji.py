@@ -70,7 +70,7 @@ class AddEmoji(commands.Cog):
 
     @commands.slash_command(name='delete_emoji')
     @commands.has_permissions(manage_emojis=True)
-    async def add_emoji(self, inter, emoji: str):
+    async def delete_emoji(self, inter, emoji: str):
         '''
         Delete the target emoji from the guild
 
@@ -88,6 +88,19 @@ class AddEmoji(commands.Cog):
             return await inter.response.send_message(f'Target emoji deleted', ephemeral=True)
 
         await inter.response.send_message(f'No emoji with that name was found', ephemeral=True)
+
+
+
+
+    @add_emoji.error
+    @delete_emoji.error
+    async def missing_perm_error(self, inter, error):
+        if isinstance(error, commands.MissingPermissions):
+            await inter.response.send_message(
+                'You do not permission to use this command', ephemeral=True
+                )
+        else:
+            raise error
 
 
 def setup(bot):
