@@ -1,6 +1,7 @@
 from requests import get
 from disnake.ext import commands
-from disnake import File, HTTPException
+from disnake import File, HTTPException, utils
+
 
 
 
@@ -66,6 +67,27 @@ class AddEmoji(commands.Cog):
 
         await inter.edit_original_message(content=f'Error: Link did not include a message that had a supported image.')
 
+
+    @commands.slash_command(name='delete_emoji')
+    @commands.has_permissions(manage_emojis=True)
+    async def add_emoji(self, inter, emoji: str):
+        '''
+        Delete the target emoji from the guild
+
+        Parameters
+        ----------
+        emoji: Name of the emoji
+        '''
+        guild = inter.guild
+
+        # get target emoji by name
+        emoji = utils.get(guild.emojis, name=emoji)
+
+        if emoji:
+            await guild.delete_emoji(emoji, reason=f'Deleted by {inter.author.name} via command')
+            return await inter.response.send_message(f'Target emoji deleted', ephemeral=True)
+
+        await inter.response.send_message(f'No emoji with that name was found', ephemeral=True)
 
 
 def setup(bot):
