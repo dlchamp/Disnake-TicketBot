@@ -5,7 +5,11 @@ import asyncio
 
 
 async def check_attachments(message):
-
+    '''
+    Check message attachments to ensure that
+    there is an attachment and that the attachment is
+    the sample.json file for updating embed
+    '''
     if len(message.attachments) == 1:
         attachment = message.attachments[0]
         channel = message.channel
@@ -32,7 +36,11 @@ async def check_attachments(message):
 
 
 async def check_message(message):
-    msg_id = message.content
+    '''
+    check that the upload message has content
+    content should only be the message ID to be updated
+    '''
+    msg_id = message.content.strip()
 
     # check the the ID found in the message content is a valid message within the channel.
     try:
